@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>沈奕豪 — 前端工程师</title>
+  <style>
+    /* ═══════════════════════════════════════════
+       FONT
+    ═══════════════════════════════════════════ */
+    @font-face {
+      font-family: 'Maple Mono';
+      src: url('./font/MapleMono-NF-CN-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET & VARIABLES
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #1f1f1f;
+      --bg-elevated: #2a2a2a;
+      --bg-card: #282828;
+      --surface: #333333;
+      --border: #3d3d3d;
+      --border-subtle: #333333;
+      --text-primary: rgba(255, 255, 255, 0.87);
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-muted: rgba(255, 255, 255, 0.35);
+      --accent: #42A2FD;
+      --accent-dim: #3582CA;
+      --accent-glow: rgba(66, 162, 253, 0.12);
+      --font: 'Maple Mono', monospace;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-weight: 500;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════════════════
+       GRAIN OVERLAY
+    ═══════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════ */
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 48px 120px;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER — HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 120px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .hero-name .cn {
+      display: block;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      letter-spacing: 0.4em;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .hero-meta {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid rgba(66, 162, 253, 0.25);
+      padding: 6px 16px;
+      display: inline-block;
+      align-self: flex-end;
+    }
+
+    .hero-location {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTACT BAR
+    ═══════════════════════════════════════════ */
+    .contact-bar {
+      display: flex;
+      gap: 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-item:hover { color: var(--accent); }
+
+    .contact-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.3s ease;
+    }
+
+    .contact-item:hover svg { stroke: var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════ */
+    .section { margin-top: 64px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .section-number {
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      min-width: 28px;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ═══════════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════════ */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 7px 18px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      background: transparent;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: default;
+    }
+
+    .skill-tag::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: -1;
+    }
+
+    .skill-tag:hover {
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .skill-tag:hover::before { transform: scaleX(1); }
+
+    /* ═══════════════════════════════════════════
+       EXPERIENCE CARDS
+    ═══════════════════════════════════════════ */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .experience-card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .experience-card::before {
+      content: '';
+      position: absolute;
+      left: -48px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .experience-card:hover::before { transform: scaleY(1); }
+    .experience-card:hover { padding-left: 12px; }
+
+    .exp-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 4px;
+    }
+
+    .exp-tech {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+
+    .exp-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      max-width: 600px;
+    }
+
+    .exp-desc p { margin-bottom: 8px; }
+    .exp-desc p:last-child { margin-bottom: 0; }
+
+    /* ═══════════════════════════════════════════
+       PROJECTS — VERTICAL CARDS
+    ═══════════════════════════════════════════ */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 32px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--border);
+      transform: translateX(6px);
+      box-shadow: -6px 0 0 var(--accent);
+    }
+
+    .project-card:hover::after { opacity: 1; }
+
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .project-index {
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+
+    .project-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .project-name::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .project-bullets {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .project-bullets li {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .project-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: background 0.3s ease;
+    }
+
+    .project-card:hover .project-bullets li::before {
+      background: var(--accent-dim);
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer {
+      margin-top: 96px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ═══════════════════════════════════════════
+       ENTRANCE ANIMATIONS
+    ═══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.65s; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .page { padding: 48px 24px 80px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .hero-meta { text-align: left; align-self: start; }
+      .hero-title { align-self: flex-start; }
+
+      .contact-bar { gap: 20px; }
+
+      .experience-card {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .project-card { padding: 24px; }
+
+      .footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ═══════════════════════════════════════════
+       PRINT STYLES
+    ═══════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       DOWNLOAD BUTTON
+    ═══════════════════════════════════════════ */
+    .download-btn {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: #071019;
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: 2px solid #071019;
+      box-shadow: 6px 6px 0 #071019;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .download-btn:hover {
+      background: #55ABFD;
+      box-shadow: 8px 8px 0 #071019;
+      transform: translate(-2px, -2px);
+    }
+
+    .download-btn:active {
+      box-shadow: 3px 3px 0 #071019;
+      transform: translate(1px, 1px);
+    }
+
+    .download-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #071019;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    @media (max-width: 768px) {
+      .download-btn {
+        top: 16px;
+        right: 16px;
+        padding: 8px 14px;
+        font-size: 0.66rem;
+      }
+      .download-btn .btn-text { display: none; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      body::before { display: none; }
+      .download-btn { display: none; }
+      .hero::after { background: #111; }
+      .skill-tag { border-color: #999; color: #333; }
+      .skill-tag:hover { background: transparent; color: #333; }
+      .skill-tag::before { display: none; }
+      .experience-card::before { display: none; }
+      .experience-card:hover { padding-left: 0; }
+      .project-card { border-color: #ddd; background: #f9f9f9; }
+      .project-card:hover { transform: none; box-shadow: none; }
+      .contact-item { color: #333; }
+      .contact-item svg { stroke: #666; }
+      .footer-dot { display: none; }
+      .section-line { background: #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="./resume.pdf" download="沈奕豪-前端工程师-简历.pdf" class="download-btn">
+  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  <span class="btn-text">Download PDF</span>
+</a>
+
+<div class="page">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <header class="hero animate-in">
+    <div>
+      <h1 class="hero-name">
+        <span class="cn">沈 奕 豪</span>
+        Shen Yihao
+      </h1>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-title">Frontend Engineer</span>
+      <span class="hero-location">苏州, 中国</span>
+    </div>
+  </header>
+
+  <!-- ═══════════ CONTACT ═══════════ -->
+  <nav class="contact-bar animate-in delay-1">
+    <a href="mailto:13736471390@163.com" class="contact-item">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      13736471390@163.com
+    </a>
+    <a href="tel:15298861796" class="contact-item">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      15298861796
+    </a>
+    <a href="https://github.com/wuanshixue/" target="_blank" class="contact-item">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+      github.com/wuanshixue
+    </a>
+  </nav>
+
+  <!-- ═══════════ SKILLS ═══════════ -->
+  <section class="section animate-in delay-2">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <span class="skill-tag">React</span>
+      <span class="skill-tag">Next.js</span>
+      <span class="skill-tag">Vue</span>
+      <span class="skill-tag">TypeScript</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">Three.js</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Tailwind CSS</span>
+      <span class="skill-tag">HTML / CSS</span>
+      <span class="skill-tag">Astro</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">Git</span>
+    </div>
+  </section>
+
+  <!-- ═══════════ EXPERIENCE ═══════════ -->
+  <section class="section animate-in delay-3">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="experience-list">
+
+      <article class="experience-card">
+        <div class="exp-meta">
+          <span class="exp-tech">Next.js / React / TypeScript / ESLint / Git</span>
+        </div>
+        <div class="exp-content">
+          <h3 class="exp-title">NextChat 代码解读与技术文档</h3>
+          <div class="exp-desc">
+            <p>梳理 Next.js + React + TypeScript 项目的架构设计与模块边界，整理组件层级、数据流与接口契约，形成可复用的工程文档体系。</p>
+            <p>复盘构建部署链路，沉淀新人上手指南与编码规范，使用 Git 管理版本迭代，确保文档与代码同步更新。</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="experience-card">
+        <div class="exp-meta">
+          <span class="exp-tech">Word / 剪映</span>
+        </div>
+        <div class="exp-content">
+          <h3 class="exp-title">知识产权存证系统 — 演示与测试</h3>
+          <div class="exp-desc">
+            <p>编写系统演示文档（演示脚本、操作步骤、截图及注意事项），支撑产品对外展示与内部培训。</p>
+            <p>设计并执行功能测试与回归测试用例，进行缺陷跟踪与问题闭环，完善演示环境检查清单与数据准备流程。</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ PROJECTS ═══════════ -->
+  <section class="section animate-in delay-4">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-list">
+
+      <article class="project-card">
+        <div class="project-header">
+          <span class="project-index">01</span>
+          <h3 class="project-name">report-delivery-backend</h3>
+        </div>
+        <ul class="project-bullets">
+          <li>独立开发体检中心报告配送管理系统全栈应用，包含 Spring Boot 后端、Vue 管理后台、微信小程序三端，实现报告配送全流程线上化</li>
+          <li>基于 MyBatis Plus 设计 24 个实体与 22 个 REST 接口，实现基于注解的 RBAC 多角色权限控制，集成 MapStruct 进行 DTO/VO 映射</li>
+          <li>集成腾讯地图路线规划、腾讯 COS 文件存储、阿里 DashScope AI 能力，使用 Google OR-Tools 优化配送路线与拼单算法</li>
+        </ul>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <span class="project-index">02</span>
+          <h3 class="project-name">zhejian-miniapp-fronted</h3>
+        </div>
+        <ul class="project-bullets">
+          <li>基于 uni-app (Vue 2) 开发健康服务电商微信小程序，涵盖体检购买、团购、预约、职业健康管理、微信支付、优惠券、分销佣金等完整业务闭环</li>
+          <li>采用分包加载策略按业务拆分为 8 个子包优化启动性能，封装统一 API 层与请求拦截器，实现多租户配置动态切换</li>
+          <li>集成 Three.js 实现 3D 数字人头像渲染，自研小程序端 GLTF 模型加载器，对接微信 OCR 插件实现证件扫描</li>
+        </ul>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <span class="project-index">03</span>
+          <h3 class="project-name">wms-fronted</h3>
+        </div>
+        <ul class="project-bullets">
+          <li>基于 Vue 3 + Vite + Pinia + Element Plus 开发仓储管理系统前端，支持多仓库、多区域、SN/效期追踪</li>
+          <li>实现后端驱动的动态路由方案，登录时获取路由配置并通过 import.meta.glob 动态解析组件；Pinia 预加载全局 WMS 数据，基于 Map 实现 O(1) 查询</li>
+          <li>集成 ECharts 数据大屏与 vue-plugin-hiprint 标签打印（含条码/二维码），通过 @vueuse/core 实现响应式布局</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer animate-in delay-5">
+    <span class="footer-text">Designed & Built by Shen Yihao</span>
+    <div class="footer-dot"></div>
+    <span class="footer-text">2024 — Present</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
