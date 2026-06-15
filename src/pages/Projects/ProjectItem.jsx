@@ -24,6 +24,18 @@ export const ProjectItem = ({ data, index }) => {
               </a>
             )}
           </div>
+          <div className="buttons">
+            {data.gitee && (
+              <a href={data.gitee} target="_blank" rel="noopener noreferrer">
+                <Button sm>Gitee</Button>
+              </a>
+            )}
+            {data.link && (
+              <a href={data.link} target="_blank" rel="noopener noreferrer">
+                <Button sm>Visit</Button>
+              </a>
+            )}
+          </div>
         </div>
       </Face>
       <Face className="face-2">

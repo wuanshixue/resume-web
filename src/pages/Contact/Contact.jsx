@@ -80,7 +80,7 @@ export const Contact = () => {
             </a>
 
             <a
-              href="https://drive.google.com/file/d/1zp5khZY8XGJllzt2D8K0K47yqEk_Lkj5/view?usp=sharing"
+              href=""
               target="_blank"
               rel="noopener noreferrer"
             >
